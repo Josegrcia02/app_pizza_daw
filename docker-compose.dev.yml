@@ -1,0 +1,32 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres_pizza_dev
+      - DB_PORT=5432
+      - DB_DATABASE=laravel
+      - DB_USERNAME=user
+      - DB_PASSWORD=1234
+      - APP_URL=http://localhost:8000
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:KMiK8YEkjgwO+b+7M9pGtBH3CWkpC+n+JBznt6kp8LY=
+      - SESSION_DRIVER=database
+      - CACHE_STORE=database
+      - LOG_CHANNEL=stderr
+    depends_on:
+      - db  
+  
+  db:
+    image: postgres:16
+    container_name: postgres_pizza_dev
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: laravel
+    ports:
+      - "5434:5432"
